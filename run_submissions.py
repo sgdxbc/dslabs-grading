@@ -3,7 +3,7 @@ import tempfile
 import pathlib
 
 SUBMISSIONS_DIR = "lab4-all"
-OUT_DIR = "out_2"
+OUT_DIR = "out_3"
 HANDOUT_OVERLAY = "dslabs/handout-overlay.tar.gz"
 RUN_TESTS_ARGS = "--lab 4"
 # TIMEOUT = 800  # my lab 4 takes 635.71s
@@ -13,9 +13,7 @@ TIMEOUT = 1000
 def run_submission(submission_path):
     # open log file early, so every submission will always has a corresponding
     # log file, make collection easier
-    with tempfile.TemporaryDirectory() as work_dir, open(
-        f"{OUT_DIR}/{submission_path.name}.log", "wb"
-    ) as log_file:
+    with tempfile.TemporaryDirectory() as work_dir:
         print(f"RUN {submission_path} IN {work_dir}")
 
         setup_command = f"tar -xf {submission_path} --directory={work_dir} && tar -xf {HANDOUT_OVERLAY} --directory={work_dir}"
@@ -36,13 +34,20 @@ def run_submission(submission_path):
             return
 
         run_command = f"timeout --signal=KILL {TIMEOUT} ./run-tests.py {RUN_TESTS_ARGS} | tail -n 1000"
+        with open(f"{work_dir}/grading.log", "wb") as log_file:
+            subprocess.run(
+                run_command,
+                shell=True,
+                cwd=work_dir,
+                stdout=log_file,
+                stderr=subprocess.DEVNULL,
+                # timeout=TIMEOUT,
+            )
+
         subprocess.run(
-            run_command,
+            f"mv {work_dir}/grading.log {OUT_DIR}/{submission_path.name}.log",
             shell=True,
-            cwd=work_dir,
-            stdout=log_file,
-            stderr=subprocess.DEVNULL,
-            # timeout=TIMEOUT,
+            check=True,
         )
 
 

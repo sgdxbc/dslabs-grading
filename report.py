@@ -1,7 +1,7 @@
 import re
 import pathlib
 
-OUT_DIRS = ["out_1", "out_2"]
+OUT_DIRS = ["out_1", "out_2", "out_3"]
 
 scores = {}
 for out_dir in OUT_DIRS:
