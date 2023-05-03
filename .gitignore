@@ -1,0 +1,6 @@
+*
+!.gitignore
+!README.md
+!prepare_overlay.sh
+!run_submissions.py
+!report.py
