@@ -1,8 +1,9 @@
 import subprocess
 import tempfile
 import pathlib
+import random
 
-SUBMISSIONS_DIR = "lab4-all"
+SUBMISSIONS_DIR = "lab4-fixed"
 OUT_DIR = "out_3"
 HANDOUT_OVERLAY = "dslabs/handout-overlay.tar.gz"
 RUN_TESTS_ARGS = "--lab 4"
@@ -52,7 +53,9 @@ def run_submission(submission_path):
 
 
 pathlib.Path(OUT_DIR).mkdir(exist_ok=True)
-for submission_path in pathlib.Path(SUBMISSIONS_DIR).glob("*.tar.gz"):
+submission_paths = list(pathlib.Path(SUBMISSIONS_DIR).glob("*.tar.gz"))
+random.shuffle(submission_paths)
+for submission_path in submission_paths:
     if pathlib.Path(f"{OUT_DIR}/{submission_path.name}.log").exists():
         print(f"SKIP {submission_path.name}")
         continue
