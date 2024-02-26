@@ -1,4 +1,4 @@
-#!/bin/bash -x -e
+#!/bin/bash -xe
 git clone https://github.com/emichael/dslabs
 pushd dslabs
 git checkout handout
