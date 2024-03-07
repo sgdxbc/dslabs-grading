@@ -3,8 +3,8 @@ import tempfile
 import pathlib
 import random
 
-SUBMISSIONS_DIR = "lab1-submissions-fix"
-OUT_DIR = "lab1-out.0"
+SUBMISSIONS_DIR = "lab1-submissions"
+OUT_DIR = "lab1-out.2"
 HANDOUT_OVERLAY = "dslabs/handout-overlay.tar.gz"
 RUN_TESTS_ARGS = "--lab 1"
 # TIMEOUT = 800  # my lab 4 takes 635.71s
